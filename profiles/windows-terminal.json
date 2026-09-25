@@ -1,0 +1,10 @@
+{
+  "profiles": [
+    {
+      "name": "{{name}}",
+      "commandline": "{{commandline}}",
+      "startingDirectory": "%USERPROFILE%",
+      "hidden": false
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+# tether on the three platforms it runs on: fmt, clippy, cargo-deny, the tests (unit,
+# integration over a real pseudo-terminal, conformance) and the TypeScript SDK against the
+# built binary.
+name: tether
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2025, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - run: cargo test --workspace
+      # the tests build a binary only for a crate whose integration tests need it
+      - run: cargo build --workspace --bins
+
+      - name: the SDK, against the built host
+        working-directory: sdk/typescript
+        shell: bash
+        run: |
+          bun install
+          bunx tsc -p .
+          TETHER_BIN="$GITHUB_WORKSPACE/target/debug/tether" TESTTUI_BIN="$GITHUB_WORKSPACE/target/debug/testtui" bun test
+
+  deny:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2
+
+  msrv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.89
+      - run: cargo check --workspace --all-targets

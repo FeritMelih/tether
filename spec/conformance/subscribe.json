@@ -1,0 +1,12 @@
+{
+  "name": "a subscription starts with the screen and follows the output",
+  "steps": [
+    { "request": "spawn", "args": { "argv": ["$TESTTUI"] }, "save": { "s": "session" } },
+    { "wait": "$s", "contains": "SIZE" },
+    { "subscribe": { "session": "$s", "role": "viewer" }, "resync": true, "until": "READY" },
+    { "type": "$s", "text": "bell" },
+    { "subscribe": { "session": "$s", "from": "now" }, "until": "RANG", "after": { "type": "$s", "text": "bell" } },
+    { "request": "info", "args": { "session": "$s" }, "expect": { "clients.0.role": "viewer" } },
+    { "request": "kill", "args": { "session": "$s" } }
+  ]
+}

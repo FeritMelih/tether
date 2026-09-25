@@ -1,0 +1,14 @@
+{
+  "name": "the screen reads as text, as a repaint and as styled runs",
+  "steps": [
+    { "request": "spawn", "args": { "argv": ["$TESTTUI"], "size": { "cols": 60, "rows": 8 } }, "save": { "s": "session" } },
+    { "wait": "$s", "contains": "SIZE" },
+    { "type": "$s", "text": "lines 20" },
+    { "wait": "$s", "contains": "line 20" },
+    { "request": "screen", "args": { "session": "$s", "scrollback": true }, "expect": { "format": "text", "cols": 60, "rows": 8, "lines.0": "READY" } },
+    { "request": "screen", "args": { "session": "$s", "format": "vt" }, "expect": { "format": "vt" } },
+    { "request": "screen", "args": { "session": "$s", "format": "cells" }, "expect": { "format": "cells" } },
+    { "request": "screen", "args": { "session": "$s", "format": "nope" }, "error": "bad_request" },
+    { "request": "kill", "args": { "session": "$s" } }
+  ]
+}

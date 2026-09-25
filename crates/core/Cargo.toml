@@ -1,0 +1,23 @@
+[package]
+name = "tether-core"
+description = "tether's sessions: the pseudo-terminal, the screen model, subscribers and sizing"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish = false
+
+[dependencies]
+tether-proto.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+portable-pty.workspace = true
+vt100.workspace = true
+
+[target.'cfg(unix)'.dependencies]
+libc.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows-sys.workspace = true

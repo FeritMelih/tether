@@ -1,0 +1,11 @@
+{
+  "Profiles": [
+    {
+      "Name": "{{name}}",
+      "Guid": "{{guid}}",
+      "Custom Command": "Yes",
+      "Command": "{{commandline}}",
+      "Tags": ["tether"]
+    }
+  ]
+}

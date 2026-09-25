@@ -1,0 +1,16 @@
+{
+  "name": "an exit is an event with the code, and the session is kept until removed",
+  "steps": [
+    { "request": "watch", "args": {} },
+    { "request": "spawn", "args": { "argv": ["$TESTTUI"] }, "save": { "s": "session" } },
+    { "event": "created", "expect": { "session": "$s" } },
+    { "wait": "$s", "contains": "SIZE" },
+    { "type": "$s", "text": "exit 3" },
+    { "event": "exited", "expect": { "session": "$s", "code": 3 } },
+    { "request": "info", "args": { "session": "$s" }, "expect": { "status": "exited", "exit.code": 3 } },
+    { "request": "write", "args": { "session": "$s", "data": "x" }, "error": "exited" },
+    { "request": "remove", "args": { "session": "$s" } },
+    { "event": "removed", "expect": { "session": "$s" } },
+    { "request": "info", "args": { "session": "$s" }, "error": "not_found" }
+  ]
+}

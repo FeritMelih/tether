@@ -1,0 +1,10 @@
+{
+  "name": "a session with no window has its cursor query answered by the host",
+  "steps": [
+    { "request": "spawn", "args": { "argv": ["$TESTTUI"], "size": { "cols": 90, "rows": 20 }, "name": "cq" }, "save": { "s": "session" } },
+    { "wait": "$s", "contains": "CPR 2 1" },
+    { "wait": "$s", "contains": "SIZE 90 20" },
+    { "request": "info", "args": { "session": "cq" }, "expect": { "session": "$s", "status": "running", "cols": 90, "rows": 20, "name": "cq" } },
+    { "request": "kill", "args": { "session": "$s" } }
+  ]
+}

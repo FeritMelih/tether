@@ -1,0 +1,67 @@
+{
+  "$comment": "Frames as bytes (hex) and as decoded; both SDKs decode every one and encode the ones a client sends. JSON payloads are compact, keys in the order shown.",
+  "fixtures": [
+    {
+      "name": "a request",
+      "hex": "14000000017b226964223a312c226f70223a2270696e67227d",
+      "frame": {
+        "type": "message",
+        "json": {
+          "id": 1,
+          "op": "ping"
+        }
+      }
+    },
+    {
+      "name": "a hello",
+      "hex": "23000000007b2268656c6c6f223a22746574686572222c2270726f746f636f6c223a5b312c315d7d",
+      "frame": {
+        "type": "handshake",
+        "json": {
+          "hello": "tether",
+          "protocol": [
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "output past 2^32 bytes",
+      "hex": "13000000020700000005000000000100001b5b33316d6869",
+      "frame": {
+        "type": "output",
+        "stream": 7,
+        "seq": 1099511627781,
+        "data": "1b5b33316d6869"
+      }
+    },
+    {
+      "name": "input",
+      "hex": "0500000003030000000d",
+      "frame": {
+        "type": "input",
+        "stream": 3,
+        "data": "0d"
+      }
+    },
+    {
+      "name": "an empty resync",
+      "hex": "0c00000004030000000900000000000000",
+      "frame": {
+        "type": "resync",
+        "stream": 3,
+        "seq": 9,
+        "data": ""
+      }
+    },
+    {
+      "name": "a type no one knows",
+      "hex": "020000007f0102",
+      "frame": {
+        "type": "unknown",
+        "code": 127
+      }
+    }
+  ]
+}

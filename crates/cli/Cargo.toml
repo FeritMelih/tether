@@ -1,0 +1,29 @@
+[package]
+name = "tether-pty"
+description = "tether: hold programs in pseudo-terminals that any application can type into, read and watch, while terminal windows attach and detach"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish = false
+
+[[bin]]
+name = "tether"
+path = "src/main.rs"
+
+[dependencies]
+tether-proto.workspace = true
+tether-core.workspace = true
+tether-server.workspace = true
+tether-client.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+clap.workspace = true
+
+[target.'cfg(unix)'.dependencies]
+libc.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows-sys.workspace = true

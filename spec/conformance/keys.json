@@ -1,0 +1,17 @@
+{
+  "name": "keys by name follow the cursor-key mode",
+  "steps": [
+    { "request": "spawn", "args": { "argv": ["$TESTTUI"] }, "save": { "s": "session" } },
+    { "wait": "$s", "contains": "SIZE" },
+    { "request": "keys", "args": { "session": "$s", "keys": ["Down"] } },
+    { "wait": "$s", "contains": "IN 1b5b42" },
+    { "request": "keys", "args": { "session": "$s", "keys": ["S-Tab"] } },
+    { "wait": "$s", "contains": "IN 1b5b5a" },
+    { "type": "$s", "text": "appcursor" },
+    { "wait": "$s", "contains": "APPCURSOR" },
+    { "request": "keys", "args": { "session": "$s", "keys": ["Down"] } },
+    { "wait": "$s", "contains": "IN 1b4f42" },
+    { "request": "keys", "args": { "session": "$s", "keys": ["Nope"] }, "error": "bad_request" },
+    { "request": "kill", "args": { "session": "$s" } }
+  ]
+}

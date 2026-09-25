@@ -1,0 +1,14 @@
+{
+  "name": "a paste is bracketed once the program asks for it",
+  "steps": [
+    { "request": "spawn", "args": { "argv": ["$TESTTUI"] }, "save": { "s": "session" } },
+    { "wait": "$s", "contains": "SIZE" },
+    { "request": "paste", "args": { "session": "$s", "text": "x" }, "expect": { "bracketed": false } },
+    { "request": "keys", "args": { "session": "$s", "keys": ["Enter"] } },
+    { "type": "$s", "text": "bracketed" },
+    { "wait": "$s", "contains": "BRACKETED" },
+    { "request": "paste", "args": { "session": "$s", "text": "y" }, "expect": { "bracketed": true } },
+    { "wait": "$s", "contains": "1b5b3230307e" },
+    { "request": "kill", "args": { "session": "$s" } }
+  ]
+}

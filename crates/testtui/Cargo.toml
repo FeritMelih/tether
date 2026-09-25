@@ -1,0 +1,29 @@
+[package]
+name = "tether-testtui"
+description = "A deterministic program for tether's tests: echoes what it is typed, reports its size, and obeys a few line commands"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish = false
+
+[[bin]]
+name = "testtui"
+path = "src/main.rs"
+
+[target.'cfg(unix)'.dependencies]
+libc.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows-sys.workspace = true
+
+[dev-dependencies]
+tether-proto.workspace = true
+tether-core.workspace = true
+tether-server.workspace = true
+tether-client.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+vt100.workspace = true

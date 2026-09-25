@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>tether: third-party licences</title></head>
+<body>
+<h1>Third-party licences</h1>
+<p>tether links the crates below. Each licence is given in full, with the crates it covers.</p>
+{{#each licenses}}
+<h2>{{name}}</h2>
+<ul>{{#each used_by}}<li><a href="{{#if crate.repository}}{{crate.repository}}{{else}}https://crates.io/crates/{{crate.name}}{{/if}}">{{crate.name}} {{crate.version}}</a></li>{{/each}}</ul>
+<pre>{{text}}</pre>
+{{/each}}
+</body></html>

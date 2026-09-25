@@ -1,0 +1,11 @@
+{
+  "name": "requests the host cannot answer say why",
+  "steps": [
+    { "request": "info", "args": { "session": "nobody" }, "error": "not_found" },
+    { "request": "spawn", "args": { "argv": [] }, "error": "bad_request" },
+    { "request": "spawn", "args": { "argv": ["tether-no-such-program"] }, "error": "spawn_failed" },
+    { "request": "nonsense", "args": { "session": "nobody" }, "error": "not_found" },
+    { "request": "ping", "args": {} },
+    { "request": "host", "args": {}, "expect": { "protocol": 1, "draining": false } }
+  ]
+}
